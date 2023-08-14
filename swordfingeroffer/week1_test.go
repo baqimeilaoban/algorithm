@@ -6,8 +6,8 @@ import (
 )
 
 func TestWeek1(t *testing.T) {
-	nums := [][]int{{1, 2, 8, 9}, {2, 4, 9, 12}, {4, 7, 10, 13}, {6, 8, 11, 15}}
-	res := searchArray(nums, 5)
+	nums := "We are happy."
+	res := replaceSpaces(nums)
 	fmt.Println(res)
 }
 
@@ -112,4 +112,44 @@ func searchArray(array [][]int, target int) bool {
 		}
 	}
 	return false
+}
+
+/**
+请实现一个函数，把字符串中的每个空格替换成"%20"。
+数据范围
+0≤ 输入字符串的长度 ≤1000。
+注意输出字符串的长度可能大于 1000。
+样例：
+输入："We are happy."
+输出："We%20are%20happy."
+*/
+func replaceSpaces(str string) string {
+	var res string
+	for _, c := range str {
+		if c == ' ' {
+			res = fmt.Sprintf("%s%s", res, "%20")
+		} else {
+			res = fmt.Sprintf("%s%c", res, c)
+		}
+	}
+	return res
+}
+
+/**
+输入一个链表的头结点，按照 从尾到头 的顺序返回节点的值。
+返回的结果用数组存储。
+数据范围
+0≤ 链表长度 ≤1000
+样例：
+输入：[2, 3, 5]
+返回：[5, 3, 2]
+*/
+func printListReversion(head *ListNode) []int {
+	var res []int
+	cur := head
+	for cur != nil {
+		res = append(res, cur.Val)
+		cur = cur.Next
+	}
+	return reverseArray(res)
 }
