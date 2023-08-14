@@ -6,8 +6,8 @@ import (
 )
 
 func TestWeek1(t *testing.T) {
-	nums := []int{2, 3, 5, 4, 3, 2, 6, 7}
-	res := duplicateInArray02(nums)
+	nums := [][]int{{1, 2, 8, 9}, {2, 4, 9, 12}, {4, 7, 10, 13}, {6, 8, 11, 15}}
+	res := searchArray(nums, 5)
 	fmt.Println(res)
 }
 
@@ -35,7 +35,7 @@ func duplicateInArray(nums []int) int {
 		}
 	}
 	for i := 0; i < size; i++ {
-		// i != nums[i] 主要是为了排除无法交换的场景，如 0 == num[0]，此场景该进入下一步骤
+		// i != nums[i] 主要是为了排除无法交换的场景，如 0 == num[0]，此场景该进入下一个步骤
 		for i != nums[i] && nums[nums[i]] != nums[i] {
 			nums[i], nums[nums[i]] = swapInt(nums[i], nums[nums[i]])
 		}
@@ -78,6 +78,38 @@ func duplicateInArray02(nums []int) int {
 	return r
 }
 
-func searchArray() {
-
+/**
+在一个二维数组中，每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。
+请完成一个函数，输入这样的一个二维 数组和一个整数，判断数组中是否含有该整数
+数据范围：
+二维数组中元素个数范围 [0,1000]
+示例：
+输入数组：
+[
+  [1,2,8,9]，
+  [2,4,9,12]，
+  [4,7,10,13]，
+  [6,8,11,15]
+]
+如果输入查找数值为7，则返回true，
+如果输入查找数值为5，则返回false
+*/
+func searchArray(array [][]int, target int) bool {
+	// 直接对比左上角的数，例如9，比9大就会把行减一，比9小就会把列减一
+	length := len(array)
+	// 边界条件
+	if length == 0 || len(array[0]) == 0 {
+		return false
+	}
+	i, j := 0, len(array[0])-1
+	for i < length && j >= 0 {
+		if array[i][j] == target {
+			return true
+		} else if array[i][j] > target {
+			j--
+		} else {
+			i++
+		}
+	}
+	return false
 }

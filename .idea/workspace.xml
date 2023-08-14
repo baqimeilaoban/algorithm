@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d005fabf-2703-45d9-99bf-7e8e5180414e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/swordfingeroffer/common.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/swordfingeroffer/week1_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/swordfingeroffer/week1_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/swordfingeroffer/week1_test.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,7 +20,10 @@
       </list>
     </option>
   </component>
-  <component name="GOROOT" url="file://$PROJECT_DIR$/../../../../go1.19.1" />
+  <component name="GOROOT" url="file://$PROJECT_DIR$/../../../../go1.17.10" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="GoLibraries">
     <option name="indexEntireGoPath" value="true" />
   </component>
@@ -50,7 +52,9 @@
     "WebServerToolWindowFactoryState": "false",
     "go.import.settings.migrated": "true",
     "go.sdk.automatically.set": "true",
-    "last_opened_file_path": "/Users/huangjianbo/go/src/github.com/baqimeilaoban/algorithm"
+    "last_opened_file_path": "/Users/huangjianbo/go/src/github.com/baqimeilaoban/algorithm",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)"
   }
 }]]></component>
   <component name="RunManager">
@@ -78,17 +82,6 @@
   <component name="VgoProject">
     <integration-enabled>false</integration-enabled>
     <settings-migrated>true</settings-migrated>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/swordfingeroffer/week1_test.go</url>
-          <line>9</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/algorithm$TestWeek1_in_github_com_baqimeilaoban_algorithm_swordfingeroffer.out" NAME="TestWeek1 in github.com/baqimeilaoban/algorithm/swordfingeroffer Coverage Results" MODIFIED="1691828294762" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="GoCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
