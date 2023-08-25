@@ -6,9 +6,9 @@ import (
 )
 
 func TestWeek1(t *testing.T) {
-	nums := "We are happy."
-	res := replaceSpaces(nums)
-	fmt.Println(res)
+	node := generateTreeNode()
+	preOrder(node)
+	fmt.Println(preOrderRes)
 }
 
 /*
@@ -152,4 +152,83 @@ func printListReversion(head *ListNode) []int {
 		cur = cur.Next
 	}
 	return reverseArray(res)
+}
+
+/**
+输入一棵二叉树前序遍历和中序遍历的结果，请重建该二叉树。
+注意:
+二叉树中每个节点的值都互不相同；
+输入的前序遍历和中序遍历一定合法；
+数据范围
+树中节点数量范围 [0,100]。
+样例：
+给定：
+前序遍历是：[3, 9, 20, 15, 7] 根左右
+中序遍历是：[9, 3, 15, 20, 7] 左根右
+返回：[3, 9, 20, null, null, 15, 7, null, null, null, null]
+返回的二叉树如下所示：
+    3
+   / \
+  9  20
+    /  \
+   15   7
+*/
+func buildTree(preorder []int, inorder []int) *TreeNode {
+	// 前序遍历的形式：[ 根节点, [左子树的前序遍历结果], [右子树的前序遍历结果] ]
+	// 中序遍历的形式：[ [左子树的中序遍历结果], 根节点, [右子树的中序遍历结果] ]
+	if len(preorder) == 0 {
+		return nil
+	}
+	// 生成根节点
+	root := &TreeNode{preorder[0], nil, nil}
+	var x int
+	for i := 0; i < len(preorder); i++ {
+		if inorder[i] == preorder[0] {
+			x = i
+			break
+		}
+	}
+	root.Left = buildTree(preorder[1:len(inorder[:x])+1], inorder[:x])
+	root.Right = buildTree(preorder[len(inorder[:x])+1:], inorder[x+1:])
+	return root
+}
+
+var preOrderRes []int
+
+// 前序遍历: 根->左->右 递归方案
+func preOrder(node *TreeNode) {
+	// 节点为空
+	if node != nil {
+		// 访问节点数据
+		preOrderRes = append(preOrderRes, node.Val)
+		// 访问左子树
+		preOrder(node.Left)
+		// 访问右子树
+		preOrder(node.Right)
+	}
+}
+
+// 前序遍历 for循环方案
+func preOrderByFor(node *TreeNode) {
+	// 首先放根节点入栈
+	Push(node)
+	var cursor *TreeNode
+	// 栈不为空，执行for循环
+	for !IsEmptyStack() {
+		cursor = GetTop()
+		if cursor != nil {
+			// 访问节点数据
+			preOrderRes = append(preOrderRes, cursor.Val)
+			// 放入左子树
+			Push(cursor.Left)
+		} else {
+			// 将栈顶的元素移出去
+			Pop()
+			// pop获取栈顶元素
+			cursor = Pop()
+			// 将右子树进栈
+			Push(cursor.Right)
+		}
+
+	}
 }
