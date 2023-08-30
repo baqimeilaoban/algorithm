@@ -7,8 +7,8 @@ import (
 
 func TestWeek1(t *testing.T) {
 	node := generateTreeNode()
-	preOrder(node)
-	fmt.Println(preOrderRes)
+	postOrder(node)
+	fmt.Println(postOrderRes)
 }
 
 /*
@@ -230,5 +230,198 @@ func preOrderByFor(node *TreeNode) {
 			Push(cursor.Right)
 		}
 
+	}
+}
+
+var inOrderRes []int
+
+// 中序遍历：左->根->右
+func inOrder(node *TreeNode) {
+	if node != nil {
+		inOrder(node.Left)
+		inOrderRes = append(inOrderRes, node.Val)
+		inOrder(node.Right)
+	}
+}
+
+var postOrderRes []int
+
+// 后序遍历：左->右->根
+func postOrder(node *TreeNode) {
+	if node != nil {
+		postOrder(node.Left)
+		postOrder(node.Right)
+		postOrderRes = append(postOrderRes, node.Val)
+	}
+}
+
+var preNode *ThreadTreeNode
+
+// preOrderThread 通过前序遍历构造二叉线索树
+/**
+二叉树的线索化过程，分为两步
+第一步：使用前序遍历，将二叉树线索化
+1.定义一个全局变量，表示当前节点的前驱节点
+	preNode = nil
+2.使用前序遍历，递归的为每个节点的空链域设置线索
+	a.给当前节点设置前驱节点
+		检查当前节点的左孩子节点是否为空
+		若为空，建立当前节点的左孩子节点是否为空
+		若不为空，递归的访问左孩子节点
+	b.给前一个节点设置后继线索
+		检查前一个节点的右孩子是否为空
+		若为空，建立前一个节点的右指针线索，指向当前节点
+		若不为空，不做处理
+	c.设当前节点为前一个节点
+3.最后一个节点，单独处理右指针线索
+*/
+func PreOrderThread(node *ThreadTreeNode) {
+	// 节点为空，什么也不做
+	if node != nil {
+		// a.给当前节点设置前驱节点
+		if node.Left == nil {
+			node.Left = preNode
+			node.LTag = 1
+		}
+		// b.给前一个节点设置后继线索
+		if preNode != nil && preNode.Right == nil {
+			preNode.Right = node
+			preNode.RTag = 1
+		}
+		// c.设置当前节点为前一个节点
+		preNode = node
+		// 递归访问左子树
+		if node.LTag == 0 {
+			PreOrderThread(node.Left)
+		}
+		// 递归访问右子树
+		if node.RTag == 0 {
+			PreOrderThread(node.Right)
+		}
+	}
+}
+
+// CreatePreOrderThread 构造二叉前序线索树
+func CreatePreOrderThread(root *ThreadTreeNode) {
+	if root != nil {
+		PreOrderThread(root)
+		// 最后一个节点，单独处理右指针线索
+		if preNode != nil {
+			preNode.RTag = 1
+		}
+	}
+
+}
+
+var preOrderThreadRes []int
+
+// PreOrderThread 线索二叉树的前序遍历
+func PreOrderThreadErgodic(node *ThreadTreeNode) {
+	// 节点为空，什么都不做
+	if node != nil {
+		preOrderThreadRes = append(preOrderThreadRes, node.Val)
+		if node.LTag == 0 {
+			PreOrderThreadErgodic(node.Left)
+		} else {
+			PreOrderThreadErgodic(node.Right)
+		}
+	}
+}
+
+// PreOrderThreadByFor 循环进行遍历
+func PreOrderThreadErgodicByFor(node *ThreadTreeNode) {
+	cursor := node
+	for cursor != nil {
+		preOrderThreadRes = append(preOrderThreadRes, cursor.Val)
+		if node.LTag == 0 {
+			cursor = cursor.Left
+		} else {
+			cursor = cursor.Right
+		}
+	}
+}
+
+/**
+中序遍历：左->根->右
+二叉树的线索化过程，分为两步
+第一步：使用中序序遍历，将二叉树线索化
+1.定义一个全局变量，表示当前节点的前驱节点
+	preNode = nil
+2.使用中序遍历，递归的为每个节点的空链域设置线索
+	a.给当前节点设置前驱节点
+		检查当前节点的左孩子节点是否为空
+		若为空，建立当前节点的左孩子节点是否为空
+		若不为空，递归的访问左孩子节点
+	b.给前一个节点设置后继线索
+		检查前一个节点的右孩子是否为空
+		若为空，建立前一个节点的右指针线索，指向当前节点
+		若不为空，不做处理
+	c.设当前节点为前一个节点
+3.最后一个节点，单独处理右指针线索
+*/
+func InOrderThread(node *ThreadTreeNode) {
+	// 节点为空，什么都不做
+	if node != nil {
+		// 递归的访问左子树
+		InOrderThread(node)
+		// 给当前节点设置前驱节点
+		if node.Left == nil {
+			node.Left = preNode
+			node.LTag = 1
+		}
+		// 给前一个节点设置后继节点
+		if preNode != nil && preNode.Right == nil {
+			preNode.Right = node
+			preNode.RTag = 1
+		}
+		// 设置当前节点为前一个节点
+		preNode = node
+		// 递归访问右子树
+		InOrderThread(node.Right)
+	}
+}
+
+// CreateInOrderThread 通过中序遍历构造二叉线索树入口函数
+func CreateInOrderThread(node *ThreadTreeNode) {
+	preNode = nil
+	if node != nil {
+		InOrderThread(node)
+		if preNode != nil {
+			preNode.RTag = 1
+		}
+	}
+}
+
+var inOrderThreadRes []int
+
+// InOrderThreadErgodicByFor 中序遍历二叉线索树
+func InOrderThreadErgodicByFor(node *ThreadTreeNode) {
+	if node == nil {
+		return
+	}
+	firstNode := node
+	// 获取第一个节点
+	for firstNode.LTag == 0 {
+		firstNode = firstNode.Left
+	}
+	cursor := firstNode
+	// 依次访问线索二叉树的节点
+	for cursor != nil {
+		// 访问节点数据
+		inOrderThreadRes = append(inOrderThreadRes, cursor.Val)
+		/**
+		找到当前节点的后继节点
+		当前节点的后继节点，即：node.Right
+		由于rTag的值不同，node.Right的指向含义不同，要区别对待
+		*/
+		if cursor.RTag == 0 {
+			// 表明有右子树
+			cursor = cursor.Right
+			for cursor.LTag == 0 {
+				cursor = cursor.Left
+			}
+		} else {
+			cursor = cursor.Right
+		}
 	}
 }

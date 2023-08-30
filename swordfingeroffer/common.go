@@ -17,6 +17,18 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
+// ThreadTreeNode 线索二叉树
+type ThreadTreeNode struct {
+	// Val 数据域
+	Val int
+	// Left 左孩子节点
+	Left *ThreadTreeNode
+	// Right 右孩子节点
+	Right *ThreadTreeNode
+	// 线索标志：0-孩子，1-线索
+	LTag, RTag int
+}
+
 func reverseArray(arr []int) []int {
 	var res []int
 	for i := len(arr) - 1; i >= 0; i-- {
